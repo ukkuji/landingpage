@@ -1,3 +1,7 @@
-FROM nginx:alpine
-COPY /home/ubuntu/landing-page/ /usr/share/nginx/html/
-EXPOSE 80
+FROM php:8.0-apache
+
+WORKDIR /var/www/html
+
+COPY . .
+
+EXPOSE 80 
