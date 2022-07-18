@@ -1,27 +1,42 @@
-properties([pipelineTriggers([githubPush()])])
+properties([pipelineTriggers([githubPush()])]) 
 pipeline {
-agent any
-stages {
-stage('Build') {
-  agent { label "agent1" }
-steps {
-  //
-  script { echo "Build" }
-}
-}
-stage('Test') {
-  agent { label "agent1" }
-steps {
-//
-  script { echo "Test" }
-}
-}
-stage('Deploy') {
-  agent { label "agent1" }
-steps {
-//
-  script { echo "Deploy" }
-}
-}
-}
-}
+    agent any
+    stages {
+        stage('Build') {
+        agent { label "agent1" }
+            steps {
+              //
+                script { echo "Build"
+                if (env.BRANCH_NAME == "master")
+                
+                { 
+                sh "docker build -t andiukku/landingpage:dev-$BUILD_NUMBER . "
+                sh "docker push andiukku/landingpage:dev-$BUILD_NUMBER"
+
+                }else{ 
+                sh "docker build -t andiukku/landingpage:master-$BUILD_NUMBER . "
+                sh "docker push andiukku/landingpage:master-$BUILD_NUMBER"
+                
+                }
+                
+                
+                }
+                
+              }
+            }
+        stage('Test') {
+        agent { label "agent1" }
+            steps {
+              //
+                script { echo "Test" }
+              }
+            }
+        stage('Deploy') {
+        agent { label "agent1" }
+            steps {
+              //
+                script { echo "Deploy3" }
+            }
+          }
+        }
+      }
