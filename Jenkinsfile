@@ -7,7 +7,7 @@ pipeline {
             steps {
               //
                 script { echo "Build"
-                if (env.BRANCH_NAME == "development")
+                if (env.BRANCH_NAME == "master")
                 
                 { 
                 sh "docker build -t andiukku/landingpage:dev-$BUILD_NUMBER . "
